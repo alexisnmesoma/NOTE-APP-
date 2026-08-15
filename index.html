@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🗒️</div>
+      <span class="brand-name">My Notes</span>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search notes">
+      </div>
+      <button id="new-note-btn" class="new-note-btn">+ New note</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-view="all">All notes</button>
+    <button class="tab" data-view="pinned">Pinned</button>
+    <button class="tab" data-view="archived">Archived</button>
+  </div>
+
+  <p id="error-message" class="error-message"></p>
+
+  <!-- Note editor, hidden until "New note" or a note is clicked -->
+  <div id="note-editor" class="note-editor hidden">
+    <input type="text" id="note-title-input" placeholder="Note title" autocomplete="off">
+    <textarea id="note-content-input" placeholder="Write your note..."></textarea>
+
+    <div class="editor-attachment">
+      <label for="image-input" class="attach-label">📎 Attach image</label>
+      <input type="file" id="image-input" accept="image/*" hidden>
+      <span id="image-filename"></span>
+    </div>
+
+    <div class="editor-actions">
+      <button id="save-note-btn" class="save-btn">Save note</button>
+      <button id="cancel-note-btn" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+
+  <main class="notes-list" id="notes-list"></main>
+
+  <script src="script.js"></script>
+</body>
+</html>
