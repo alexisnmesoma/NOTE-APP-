@@ -35,16 +35,16 @@ const tabs = document.querySelectorAll('.tab');
 
 // ---- App state ----
 let notes = JSON.parse(localStorage.getItem('notes')) || [];
-let currentView = 'all';       // 'all', 'pinned', or 'archived'
-let editingNoteId = null;      // if set, we're editing this note instead of creating new
-let pendingImageData = null;   // holds the image while the editor is open
+let currentView = 'all';
+let editingNoteId = null;
+let pendingImageData = null;
 
 // ---- Save notes to Local Storage ----
 function saveNotes() {
   localStorage.setItem('notes', JSON.stringify(notes));
 }
 
-// ---- Open the editor (for a new note, or to edit an existing one) ----
+// ---- Open the editor ----
 function openEditor(note) {
   noteEditor.classList.remove('hidden');
   errorMessage.textContent = '';
@@ -91,7 +91,6 @@ saveNoteBtn.addEventListener('click', () => {
   const title = titleInput.value.trim();
   const content = contentInput.value.trim();
 
-  // conditional: validation, prevent empty notes
   if (title === '' && content === '') {
     errorMessage.textContent = 'Please add a title or some content before saving.';
     return;
@@ -161,7 +160,6 @@ function renderNotes() {
 
   const keyword = searchInput.value.trim().toLowerCase();
 
-  // filter based on current tab and search box
   let visibleNotes = notes.filter(note => {
     if (currentView === 'pinned' && !note.pinned) return false;
     if (currentView === 'archived' && !note.archived) return false;
@@ -176,10 +174,8 @@ function renderNotes() {
     return true;
   });
 
-  // pinned notes float to the top
   visibleNotes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
-  // loop through every visible note and build its row
   visibleNotes.forEach(note => {
     const row = document.createElement('div');
     row.className = 'note-row';
@@ -189,7 +185,7 @@ function renderNotes() {
 
     row.innerHTML = `
       <button class="pin-icon ${note.pinned ? 'pinned' : ''}">📌</button>
-      ${note.imageData ? <img class="note-thumb" src="${note.imageData}"> : ''}
+      ${note.imageData ? `<img class="note-thumb" src="${note.imageData}">` : ''}
       <div class="note-info">
         <div class="note-title-row">
           <span class="note-title"></span>
